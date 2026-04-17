@@ -77,18 +77,20 @@
     <main class="workspace">
       <div class="stage-toolbar">
         <div class="status">
-          <span><strong>Tip:</strong> Click the stage to add a button.</span>
+          <span><strong>Tip:</strong> Click the stage to add a button. The stage auto-fits to the available workspace.</span>
         </div>
       </div>
 
-      <div class="stage-scroll">
-        <div
-          id="stage"
-          class="stage show-grid"
-          aria-label="Interactive stage for coordinate selection"
-        >
-          <div id="gridOverlay" class="grid-overlay" aria-hidden="true"></div>
-          <div id="markerLayer" class="marker-layer"></div>
+      <div class="stage-scroll" id="stageScroll">
+        <div id="stageViewport" class="stage-viewport">
+          <div
+            id="stage"
+            class="stage show-grid"
+            aria-label="Interactive stage for coordinate selection"
+          >
+            <div id="gridOverlay" class="grid-overlay" aria-hidden="true"></div>
+            <div id="markerLayer" class="marker-layer"></div>
+          </div>
         </div>
       </div>
     </main>
