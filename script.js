@@ -20,6 +20,8 @@ let dragState = null;
 let suppressNextStageClick = false;
 
 const stage = document.getElementById("stage");
+const stageScroll = document.getElementById("stageScroll");
+const stageViewport = document.getElementById("stageViewport");
 const markerLayer = document.getElementById("markerLayer");
 const markerList = document.getElementById("markerList");
 const emptyState = document.getElementById("emptyState");
@@ -52,6 +54,26 @@ function applyPreset(presetKey) {
 
   stageWidthInput.value = preset.width;
   stageHeightInput.value = preset.height;
+}
+
+function fitStageToViewport() {
+  if (!stageScroll || !stageViewport || !stage) return;
+
+  const padding = 8;
+  const availableWidth = Math.max(stageScroll.clientWidth - padding * 2, 0);
+  const availableHeight = Math.max(stageScroll.clientHeight - padding * 2, 0);
+
+  if (!availableWidth || !availableHeight || !state.width || !state.height) return;
+
+  const scale = Math.min(
+    availableWidth / state.width,
+    availableHeight / state.height,
+    1
+  );
+
+  stage.style.transform = `scale(${scale})`;
+  stageViewport.style.width = `${state.width * scale}px`;
+  stageViewport.style.height = `${state.height * scale}px`;
 }
 
 function applyStageSize() {
@@ -347,6 +369,7 @@ function renderAll(full = true) {
 
   renderMarkers();
   renderSidebar();
+  fitStageToViewport();
 }
 
 function exportJson() {
@@ -424,6 +447,13 @@ stage.addEventListener("click", (event) => {
   const { xPct, yPct } = toPercentCoordinates(x, y, rect);
   addMarker(xPct, yPct);
 });
+
+window.addEventListener("resize", fitStageToViewport);
+
+if ("ResizeObserver" in window) {
+  const observer = new ResizeObserver(() => fitStageToViewport());
+  observer.observe(stageScroll);
+}
 
 applyPreset("desktop");
 applyStageSize();
