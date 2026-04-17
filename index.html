@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Button Coordinate Picker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="panel controls-panel">
+      <h1>Coordinate Picker</h1>
+      <p class="panel-intro">
+        Click inside the stage to place labeled buttons. Drag markers to reposition them.
+        Positions are stored as percentages so they adapt to resized layouts.
+      </p>
+
+      <section class="control-group">
+        <h2>Screen Size</h2>
+
+        <label for="preset">Preset</label>
+        <select id="preset">
+          <option value="desktop">Desktop (1366 × 768)</option>
+          <option value="tablet">Tablet (768 × 1024)</option>
+          <option value="mobile">Mobile (390 × 844)</option>
+          <option value="custom">Custom</option>
+        </select>
+
+        <div class="two-col">
+          <div>
+            <label for="stageWidth">Width</label>
+            <input id="stageWidth" type="number" min="100" value="1366" />
+          </div>
+          <div>
+            <label for="stageHeight">Height</label>
+            <input id="stageHeight" type="number" min="100" value="768" />
+          </div>
+        </div>
+
+        <button id="applySizeBtn" class="btn" type="button">Apply Size</button>
+      </section>
+
+      <section class="control-group">
+        <h2>Grid Settings</h2>
+
+        <div class="two-col">
+          <div>
+            <label for="rows">Rows</label>
+            <input id="rows" type="number" min="1" value="8" />
+          </div>
+          <div>
+            <label for="cols">Columns</label>
+            <input id="cols" type="number" min="1" value="12" />
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <label><input type="checkbox" id="toggleGrid" checked /> Show grid</label>
+        </div>
+
+        <div class="checkbox-row">
+          <label><input type="checkbox" id="snapToGrid" /> Snap to grid</label>
+        </div>
+
+        <button id="applyGridBtn" class="btn btn-secondary" type="button">Apply Grid</button>
+      </section>
+
+      <section class="control-group">
+        <h2>Actions</h2>
+        <div class="actions">
+          <button id="clearMarkersBtn" class="btn btn-danger" type="button">Clear All Markers</button>
+          <button id="exportJsonBtn" class="btn btn-success" type="button">Export JSON</button>
+        </div>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <div class="stage-toolbar">
+        <div class="status">
+          <span><strong>Tip:</strong> Click the stage to add a button.</span>
+        </div>
+      </div>
+
+      <div class="stage-scroll">
+        <div
+          id="stage"
+          class="stage show-grid"
+          aria-label="Interactive stage for coordinate selection"
+        >
+          <div id="gridOverlay" class="grid-overlay" aria-hidden="true"></div>
+          <div id="markerLayer" class="marker-layer"></div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="panel output-panel">
+      <h2>Marker Details</h2>
+      <div id="emptyState" class="empty-state">
+        No markers yet. Click inside the stage to add one.
+      </div>
+      <div id="markerList" class="marker-list"></div>
+    </aside>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
